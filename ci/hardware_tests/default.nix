@@ -8,6 +8,12 @@ stdenv.mkDerivation rec {
     poetry
     libusb1
     dejavu_fonts
+    strace
+    lsof
+    usbutils
+    openssh
+    tcpdump
+    socat
   ];
   LD_LIBRARY_PATH = "${libusb1}/lib";
   NIX_ENFORCE_PURITY = 0;

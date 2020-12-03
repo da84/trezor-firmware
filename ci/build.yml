@@ -195,22 +195,22 @@ core fw btconly debug build:
 #    paths:
 #      - trezor-fw-regular-*.*.*-$CI_COMMIT_SHORT_SHA.bin
 #    expire_in: 1 week
-#
-#legacy fw regular debug build:
-#  stage: build
-#  needs: []
-#  variables:
-#    DEBUG_LINK: "1"
-#    MEMORY_PROTECT: "0"
-#  script:
-#    - nix-shell --run "poetry run legacy/script/cibuild"
-#    - mv legacy/firmware/trezor.bin trezor-fw-regular-debug-$LEGACY_VERSION-$CI_COMMIT_SHORT_SHA.bin
-#  artifacts:
-#    name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
-#    paths:
-#      - trezor-fw-regular-debug-*.*.*-$CI_COMMIT_SHORT_SHA.bin
-#    expire_in: 1 week
-#
+
+legacy fw regular debug build:
+  stage: build
+  needs: []
+  variables:
+    DEBUG_LINK: "1"
+    MEMORY_PROTECT: "0"
+  script:
+    - nix-shell --run "poetry run legacy/script/cibuild"
+    - mv legacy/firmware/trezor.bin trezor-fw-regular-debug-$LEGACY_VERSION-$CI_COMMIT_SHORT_SHA.bin
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - trezor-fw-regular-debug-*.*.*-$CI_COMMIT_SHORT_SHA.bin
+    expire_in: 1 week
+
 #legacy fw btconly build:
 #  stage: build
 #  needs: []
@@ -227,24 +227,24 @@ core fw btconly debug build:
 #    paths:
 #      - trezor-fw-btconly-*.*.*-$CI_COMMIT_SHORT_SHA.bin
 #    expire_in: 1 week
-#
-#legacy fw btconly debug build:
-#  stage: build
-#  needs: []
-#  variables:
-#    BITCOIN_ONLY: "1"
-#    MEMORY_PROTECT: "0"
-#    DEBUG_LINK: "1"
-#  script:
-#    - nix-shell --run "poetry run legacy/script/cibuild"
-#    - nix-shell --run "poetry run ./tools/check-bitcoin-only legacy/firmware/trezor.bin"
-#    - mv legacy/firmware/trezor.bin trezor-fw-btconly-debug-$LEGACY_VERSION-$CI_COMMIT_SHORT_SHA.bin
-#  artifacts:
-#    name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
-#    paths:
-#      - trezor-fw-btconly-*.*.*-$CI_COMMIT_SHORT_SHA.bin
-#    expire_in: 1 week
-#
+
+legacy fw btconly debug build:
+  stage: build
+  needs: []
+  variables:
+    BITCOIN_ONLY: "1"
+    MEMORY_PROTECT: "0"
+    DEBUG_LINK: "1"
+  script:
+    - nix-shell --run "poetry run legacy/script/cibuild"
+    - nix-shell --run "poetry run ./tools/check-bitcoin-only legacy/firmware/trezor.bin"
+    - mv legacy/firmware/trezor.bin trezor-fw-btconly-debug-$LEGACY_VERSION-$CI_COMMIT_SHORT_SHA.bin
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - trezor-fw-btconly-*.*.*-$CI_COMMIT_SHORT_SHA.bin
+    expire_in: 1 week
+
 #legacy emu regular debug build:
 #  stage: build
 #  needs: []
