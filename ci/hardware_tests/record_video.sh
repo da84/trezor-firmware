@@ -9,12 +9,15 @@ INPUTDEVICE=/dev/video0
 
 if [ "$2" == "start" ]; then
   echo "[software/video] Starting record to $OUTPUTFILE"
+  uhubctl -l 3-1.4 -p 3 -a off
+  sleep 5
+  uhubctl -l 3-1.4 -p 3 -a on
+  sleep 5
   pkill ffmpeg
   ffmpeg -loglevel info -f oss -f video4linux2 -i $INPUTDEVICE \
     -flush_packets 1 \
     -vf "drawtext=font=Dejavu Sans: \
     text='$1 | %{localtime} | %{pts}': x=(w-tw)/2: y=h-(2*lh): fontcolor=white: box=1: boxcolor=0x00000000@1: fontsize=15" $OUTPUTFILE &
-  sync
   export VPID=$!
 elif [ "$2" == "stop" ]; then
   echo "[software/video] Stopping the recording of $OUTPUTFILE"

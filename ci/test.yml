@@ -25,7 +25,7 @@ hardware core btconly device test:
 #    - export TREZOR_PATH=$(./get_trezor_path.sh 'Trezor T')
 #    - nix-shell --run "echo $TREZOR_PATH"
     - nix-shell --run "poetry run python bootstrap.py tt ../../trezor-*.bin"
-    - nix-shell --run "poetry run timeout 4h pytest -x ../../tests/device_tests -m 'not sd_card' -k 'not test_softlock_instability and not 15_of_15 and not test_multisig_mismatch_inputs'"
+    - nix-shell --run "poetry run timeout 4h pytest -x ../../tests/device_tests -m 'not sd_card' -k 'not test_softlock_instability and not 15_of_15 and not test_multisig_mismatch_inputs and test_ping'"
     - nix-shell --run "./traceusb.sh /dev/bus/usb/003 |& tee -a out/traceusb.txt"
     - nix-shell --run "echo finished"
   timeout: 4h
@@ -61,11 +61,8 @@ hardware legacy regular device test:
     - nix-shell --run "poetry run python bootstrap.py t1"
     - nix-shell --run "poetry run python bootstrap.py t1 ../../trezor-*.bin"
     - nix-shell --run "poetry run trezorctl list -n"
-    - nix-shell --run "poetry run timeout 15m pytest -x ../../tests/device_tests"
+    - nix-shell --run "poetry run timeout 15m pytest -x ../../tests/device_tests -k test_ping || ./record_video.sh ${CI_COMMIT_SHORT_SHA} stop"
     - nix-shell --run "./traceusb.sh /dev/bus/usb/003 |& tee -a out/traceusb.txt"
-    - nix-shell --run "echo finished"
-  after_script:
-    - cd ci/hardware_tests
     - nix-shell --run "./record_video.sh ${CI_COMMIT_SHORT_SHA} stop"
     - nix-shell --run "ls -l out/* *.mp4"
   timeout: 15m
@@ -105,11 +102,8 @@ hardware legacy btconly device test:
     - nix-shell --run "poetry run python bootstrap.py t1"
     - nix-shell --run "poetry run python bootstrap.py t1 ../../trezor-*.bin"
     - nix-shell --run "poetry run trezorctl list -n"
-    - nix-shell --run "poetry run timeout 15m pytest -x ../../tests/device_tests"
+    - nix-shell --run "poetry run timeout 15m pytest -x ../../tests/device_tests -k test_ping || ./record_video.sh ${CI_COMMIT_SHORT_SHA} stop"
     - nix-shell --run "./traceusb.sh /dev/bus/usb/003 |& tee -a out/traceusb.txt"
-    - nix-shell --run "echo finished"
-  after_script:
-    - cd ci/hardware_tests
     - nix-shell --run "./record_video.sh ${CI_COMMIT_SHORT_SHA} stop"
     - nix-shell --run "ls -l out/* *.mp4"
   timeout: 15m
