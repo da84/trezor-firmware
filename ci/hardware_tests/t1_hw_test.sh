@@ -22,5 +22,5 @@ poetry run trezorctl list -n
 poetry run python bootstrap.py t1
 poetry run python bootstrap.py t1 ../../trezor-*.bin
 poetry run trezorctl list -n
-poetry run timeout 2h pytest -x ../../tests/device_tests -k test_ping
+poetry run timeout 2h pytest -x ../../tests/device_tests
 ./traceusb.sh /dev/bus/usb/003 &>> out/traceusb.txt
