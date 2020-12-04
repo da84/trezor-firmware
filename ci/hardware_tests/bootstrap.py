@@ -16,8 +16,10 @@ def main(model: str, file: str = None):
     tt = TrezorT(config["tt"]["uhub_location"], config["tt"]["port"])
 
     if model == "t1":
+        tt.power_off()
         t1.update_firmware(file)
     elif model == "tt":
+        t1.power_off()
         tt.update_firmware(file)
     else:
         raise ValueError("Unknown Trezor model.")
