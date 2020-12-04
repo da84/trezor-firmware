@@ -17,5 +17,5 @@ set -x # trace commands
 #echo $TREZOR_PATH
 poetry run python bootstrap.py t1
 poetry run python bootstrap.py t1 ../../trezor-*.bin
-poetry run pytest -x ../../tests/device_tests
 poetry run trezorctl list -n
+poetry run timeout 2h pytest -x ../../tests/device_tests

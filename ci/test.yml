@@ -324,7 +324,7 @@ hardware core btconly device test:
 #    - export TREZOR_PATH=$(./get_trezor_path.sh 'Trezor T')
 #    - nix-shell --run "echo $TREZOR_PATH"
     - nix-shell --run "poetry run python bootstrap.py tt ../../trezor-*.bin"
-    - nix-shell --run "poetry run pytest ../../tests/device_tests"
+    - nix-shell --run "poetry run timeout 4h pytest ../../tests/device_tests"
   timeout: 4h
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
@@ -346,6 +346,7 @@ hardware legacy regular device test:
   script:
     - cd ci/hardware_tests
     - nix-shell --run "./t1_hw_test.sh"
+  timeout: 2h
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
     paths:
@@ -370,6 +371,7 @@ hardware legacy btconly device test:
   script:
     - cd ci/hardware_tests
     - nix-shell --run "./t1_hw_test.sh"
+  timeout: 2h
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
     paths:
