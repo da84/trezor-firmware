@@ -25,7 +25,7 @@ class Device:
         self.now()
         print("[hardware/usb] Turning power on...")
         os.system(
-            "uhubctl -l {} -p {} -a on > /dev/null".format(
+            "uhubctl -l {} -p {} -a on".format(
                 self.uhub_location, self.device_port
             )
         )
@@ -35,7 +35,7 @@ class Device:
         self.now()
         print("[hardware/usb] Turning power off...")
         os.system(
-            "uhubctl -l {} -p {} -r 100 -a off > /dev/null".format(
+            "uhubctl -l {} -p {} -r 100 -a off".format(
                 self.uhub_location, self.device_port
             )
         )

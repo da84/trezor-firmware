@@ -18,11 +18,11 @@ class TrezorOne(Device):
     def update_firmware(self, file=None):
         if file:
             unofficial = True
-            trezorctlcmd = "firmware-update -s -f {} &".format(file)
+            trezorctlcmd = "firmware-update -s -f {}".format(file)
             print("[software] Updating the firmware to {}".format(file))
         else:
             unofficial = False
-            trezorctlcmd = "firmware-update &"
+            trezorctlcmd = "firmware-update"
             print("[software] Updating the firmware to latest")
         self.wait(3)
         self._enter_bootloader()
