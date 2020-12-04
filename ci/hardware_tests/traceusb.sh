@@ -11,7 +11,6 @@ echo ""
 date
 ps auxf
 uhubctl
-lsof +d "$1" || true
 echo ""
 
 exit 0
