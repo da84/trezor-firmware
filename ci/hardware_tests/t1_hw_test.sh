@@ -15,6 +15,12 @@ set -x # trace commands
 #poetry run trezorctl -v list
 #export TREZOR_PATH=$(./get_trezor_path.sh 'Trezor 1')
 #echo $TREZOR_PATH
+
+uhubctl -l 3-1.4 -p 4 -a off
+sleep 5
+uhubctl -l 3-1.4 -p 4 -a on
+sleep 5
+
 poetry run python bootstrap.py t1
 poetry run python bootstrap.py t1 ../../trezor-*.bin
 poetry run trezorctl list -n
