@@ -36,7 +36,7 @@ void fsm_msgGetPublicKey(const GetPublicKey *msg) {
   }
   uint32_t fingerprint;
   HDNode *node = fsm_getDerivedNode(curve, msg->address_n, msg->address_n_count,
-                                    &fingerprint);
+                                    NULL, &fingerprint);
   if (!node) return;
   hdnode_fill_public_key(node);
 
@@ -121,7 +121,7 @@ void fsm_msgSignTx(const SignTx *msg) {
               _("Timestamp not enabled on this coin."))
   CHECK_PARAM(!coin->timestamp || msg->timestamp, _("Timestamp must be set."))
 
-  const HDNode *node = fsm_getDerivedNode(coin->curve_name, NULL, 0, NULL);
+  const HDNode *node = fsm_getDerivedNode(coin->curve_name, NULL, 0, NULL, NULL);
   if (!node) return;
 
   signing_init(msg, coin, node);
@@ -143,7 +143,7 @@ void fsm_msgGetAddress(const GetAddress *msg) {
   const CoinInfo *coin = fsm_getCoin(msg->has_coin_name, msg->coin_name);
   if (!coin) return;
   HDNode *node = fsm_getDerivedNode(coin->curve_name, msg->address_n,
-                                    msg->address_n_count, NULL);
+                                    msg->address_n_count, NULL, NULL);
   if (!node) return;
   hdnode_fill_public_key(node);
 
@@ -223,7 +223,7 @@ void fsm_msgSignMessage(const SignMessage *msg) {
   const CoinInfo *coin = fsm_getCoin(msg->has_coin_name, msg->coin_name);
   if (!coin) return;
   HDNode *node = fsm_getDerivedNode(coin->curve_name, msg->address_n,
-                                    msg->address_n_count, NULL);
+                                    msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   layoutProgressSwipe(_("Signing"), 0);

@@ -25,7 +25,7 @@ void fsm_msgLiskGetAddress(const LiskGetAddress *msg) {
   RESP_INIT(LiskAddress);
 
   HDNode *node = fsm_getDerivedNode(ED25519_NAME, msg->address_n,
-                                    msg->address_n_count, NULL);
+                                    msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   resp->has_address = true;
@@ -53,7 +53,7 @@ void fsm_msgLiskGetPublicKey(const LiskGetPublicKey *msg) {
   RESP_INIT(LiskPublicKey);
 
   HDNode *node = fsm_getDerivedNode(ED25519_NAME, msg->address_n,
-                                    msg->address_n_count, NULL);
+                                    msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   hdnode_fill_public_key(node);
@@ -86,7 +86,7 @@ void fsm_msgLiskSignMessage(const LiskSignMessage *msg) {
   RESP_INIT(LiskMessageSignature);
 
   HDNode *node = fsm_getDerivedNode(ED25519_NAME, msg->address_n,
-                                    msg->address_n_count, NULL);
+                                    msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   hdnode_fill_public_key(node);
@@ -132,7 +132,7 @@ void fsm_msgLiskSignTx(LiskSignTx *msg) {
   RESP_INIT(LiskSignedTx);
 
   HDNode *node = fsm_getDerivedNode(ED25519_NAME, msg->address_n,
-                                    msg->address_n_count, NULL);
+                                    msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   hdnode_fill_public_key(node);

@@ -31,7 +31,7 @@ void fsm_msgEthereumGetPublicKey(const EthereumGetPublicKey *msg) {
   const char *curve = coin->curve_name;
   uint32_t fingerprint;
   HDNode *node = fsm_getDerivedNode(curve, msg->address_n, msg->address_n_count,
-                                    &fingerprint);
+                                    NULL, &fingerprint);
   if (!node) return;
   hdnode_fill_public_key(node);
 
@@ -68,7 +68,7 @@ void fsm_msgEthereumSignTx(EthereumSignTx *msg) {
   CHECK_PIN
 
   const HDNode *node = fsm_getDerivedNode(SECP256K1_NAME, msg->address_n,
-                                          msg->address_n_count, NULL);
+                                          msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   ethereum_signing_init(msg, node);
@@ -86,7 +86,7 @@ void fsm_msgEthereumGetAddress(const EthereumGetAddress *msg) {
   CHECK_PIN
 
   const HDNode *node = fsm_getDerivedNode(SECP256K1_NAME, msg->address_n,
-                                          msg->address_n_count, NULL);
+                                          msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   uint8_t pubkeyhash[20];
@@ -144,7 +144,7 @@ void fsm_msgEthereumSignMessage(const EthereumSignMessage *msg) {
   CHECK_PIN
 
   const HDNode *node = fsm_getDerivedNode(SECP256K1_NAME, msg->address_n,
-                                          msg->address_n_count, NULL);
+                                          msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   ethereum_message_sign(msg, node, resp);

@@ -32,7 +32,7 @@ void fsm_msgNEMGetAddress(NEMGetAddress *msg) {
   RESP_INIT(NEMAddress);
 
   HDNode *node = fsm_getDerivedNode(ED25519_KECCAK_NAME, msg->address_n,
-                                    msg->address_n_count, NULL);
+                                    msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   if (!hdnode_get_nem_address(node, msg->network, resp->address)) return;
@@ -120,7 +120,7 @@ void fsm_msgNEMSignTx(NEMSignTx *msg) {
 
   HDNode *node =
       fsm_getDerivedNode(ED25519_KECCAK_NAME, msg->transaction.address_n,
-                         msg->transaction.address_n_count, NULL);
+                         msg->transaction.address_n_count, NULL, NULL);
   if (!node) return;
 
   hdnode_fill_public_key(node);
@@ -317,7 +317,7 @@ void fsm_msgNEMDecryptMessage(NEMDecryptMessage *msg) {
   CHECK_PIN
 
   const HDNode *node = fsm_getDerivedNode(ED25519_KECCAK_NAME, msg->address_n,
-                                          msg->address_n_count, NULL);
+                                          msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   const uint8_t *salt = msg->payload.bytes;

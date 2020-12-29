@@ -210,14 +210,21 @@ static const CoinInfo *fsm_getCoin(bool has_name, const char *name) {
 
 static HDNode *fsm_getDerivedNode(const char *curve, const uint32_t *address_n,
                                   size_t address_n_count,
+                                  uint32_t *root_fingerprint,
                                   uint32_t *fingerprint) {
   static CONFIDENTIAL HDNode node;
+  if (root_fingerprint) {
+    *root_fingerprint = 0;
+  }
   if (fingerprint) {
     *fingerprint = 0;
   }
   if (!config_getRootNode(&node, curve)) {
     layoutHome();
     return 0;
+  }
+  if (root_fingerprint) {
+    *root_fingerprint = hdnode_fingerprint(&node);
   }
   if (!address_n || address_n_count == 0) {
     return &node;

@@ -28,7 +28,7 @@ void fsm_msgCipherKeyValue(const CipherKeyValue *msg) {
   CHECK_PIN
 
   const HDNode *node = fsm_getDerivedNode(SECP256K1_NAME, msg->address_n,
-                                          msg->address_n_count, NULL);
+                                          msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   bool encrypt = msg->has_encrypt && msg->encrypt;
@@ -111,7 +111,7 @@ void fsm_msgSignIdentity(const SignIdentity *msg) {
   if (msg->has_ecdsa_curve_name) {
     curve = msg->ecdsa_curve_name;
   }
-  HDNode *node = fsm_getDerivedNode(curve, address_n, 5, NULL);
+  HDNode *node = fsm_getDerivedNode(curve, address_n, 5, NULL, NULL);
   if (!node) return;
 
   bool sign_ssh =
@@ -207,7 +207,7 @@ void fsm_msgGetECDHSessionKey(const GetECDHSessionKey *msg) {
     curve = msg->ecdsa_curve_name;
   }
 
-  const HDNode *node = fsm_getDerivedNode(curve, address_n, 5, NULL);
+  const HDNode *node = fsm_getDerivedNode(curve, address_n, 5, NULL, NULL);
   if (!node) return;
 
   int result_size = 0;
@@ -241,7 +241,7 @@ void fsm_msgCosiCommit(const CosiCommit *msg) {
   CHECK_PIN
 
   const HDNode *node = fsm_getDerivedNode(ED25519_NAME, msg->address_n,
-                                          msg->address_n_count, NULL);
+                                          msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   uint8_t nonce[32];
@@ -284,7 +284,7 @@ void fsm_msgCosiSign(const CosiSign *msg) {
   CHECK_PIN
 
   const HDNode *node = fsm_getDerivedNode(ED25519_NAME, msg->address_n,
-                                          msg->address_n_count, NULL);
+                                          msg->address_n_count, NULL, NULL);
   if (!node) return;
 
   uint8_t nonce[32];
