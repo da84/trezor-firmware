@@ -34,9 +34,10 @@ void fsm_msgGetPublicKey(const GetPublicKey *msg) {
   if (msg->has_ecdsa_curve_name) {
     curve = msg->ecdsa_curve_name;
   }
+  uint32_t root_fingerprint;
   uint32_t fingerprint;
   HDNode *node = fsm_getDerivedNode(curve, msg->address_n, msg->address_n_count,
-                                    NULL, &fingerprint);
+                                    &root_fingerprint, &fingerprint);
   if (!node) return;
   hdnode_fill_public_key(node);
 
@@ -95,6 +96,8 @@ void fsm_msgGetPublicKey(const GetPublicKey *msg) {
       }
     }
   }
+
+  resp->root_fingerprint = root_fingerprint;
 
   msg_write(MessageType_MessageType_PublicKey, resp);
   layoutHome();
