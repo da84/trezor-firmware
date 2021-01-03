@@ -699,7 +699,7 @@ class U2fConfirmAuthenticate(U2fState):
         super().__init__(cid, iface, req_data, cred)
 
     def get_header(self) -> str:
-        return "U2F Authenticate"
+        return "TEST Authenticate"
 
     async def confirm_dialog(self) -> bool:
         content = ConfirmContent(self)
