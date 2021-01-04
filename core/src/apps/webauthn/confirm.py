@@ -52,11 +52,11 @@ class ConfirmContent(ui.Component):
             # in that case show the text only once.
             if account_name is not None:
                 if app_name != account_name:
-                    text_center_trim_left(ui.WIDTH // 2, 140, app_name)
-                    text_center_trim_right(ui.WIDTH // 2, 172, account_name)
+                    text_center_trim_left(ui.WIDTH // 2, 140, "AP" + app_name)
+                    text_center_trim_right(ui.WIDTH // 2, 172, "AC" + account_name)
                 else:
-                    text_center_trim_right(ui.WIDTH // 2, 156, account_name)
+                    text_center_trim_right(ui.WIDTH // 2, 156, "AN" + account_name)
             else:
-                text_center_trim_left(ui.WIDTH // 2, 156, app_name)
+                text_center_trim_left(ui.WIDTH // 2, 156, "ELSE" + app_name)
 
             self.repaint = False
